@@ -1,0 +1,26 @@
+- name: Ensure Temp directory exists
+  ansible.windows.win_file:
+    path: "{{ ca_path }}"
+    state: directory
+
+- name: Create self-signed CA certificate
+  ansible.windows.win_shell: |
+    $cert = New-SelfSignedCertificate `
+      -Subject "{{ ca_cert_subject }}" `
+      -KeyExportPolicy Exportable `
+      -KeyLength 2048 `
+      -KeyUsage CertSign, CRLSign, DigitalSignature `
+      -KeyAlgorithm RSA `
+      -HashAlgorithm SHA256 `
+      -CertStoreLocation "Cert:\\LocalMachine\\My" `
+      -NotAfter (Get-Date).AddYears(10) `
+      -TextExtension @("2.5.29.19={critical}{text}")
+    Export-Certificate -Cert $cert -FilePath "{{ ca_cert_output }}"
+  args:
+    executable: powershell.exe
+
+- name: Fetch the CA certificate to control node
+  ansible.windows.win_fetch:
+    src: "{{ ca_cert_output }}"
+    dest: "{{ ca_cert_local_path }}"
+    flat: true
