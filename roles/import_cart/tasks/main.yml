@@ -1,15 +1,15 @@
 - name: Ensure Temp directory exists on client
   ansible.windows.win_file:
-    path: "C:\Temp"
+    path: C:\Temp
     state: directory
 
 - name: Copy CA certificate to client
   ansible.windows.win_copy:
     src: "{{ ca_cert_local_path }}"
-    dest: "C:\Temp\MyRootCA.cer"
+    dest: C:\Temp\MyRootCA.cer
 
 - name: Import CA certificate to Trusted Root Certification Authorities
   ansible.windows.win_certificate_store:
-    path: "C:\Temp\MyRootCA.cer"
+    path: C:\Temp\MyRootCA.cer
     store_name: Root
     state: present
