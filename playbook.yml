@@ -1,0 +1,9 @@
+- name: Create CA Certificate on CA Host
+  hosts: windows_ca
+  roles:
+    - create_ca
+
+- name: Import Certificate to Client Nodes
+  hosts: windows_clients
+  roles:
+    - import_cert
