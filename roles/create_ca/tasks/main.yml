@@ -12,7 +12,7 @@
       -KeyUsage CertSign, CRLSign, DigitalSignature `
       -KeyAlgorithm RSA `
       -HashAlgorithm SHA256 `
-      -CertStoreLocation "Cert:\\LocalMachine\\My" `
+      -CertStoreLocation "Cert:\LocalMachine\My" `
       -NotAfter (Get-Date).AddYears(10) `
       -TextExtension @("2.5.29.19={critical}{text}")
     Export-Certificate -Cert $cert -FilePath "{{ ca_cert_output }}"
