@@ -1,3 +1,4 @@
+---
 ca_cert_subject: "CN=MyRootCA"
 ca_cert_output: "C:\Temp\MyRootCA.cer"
 ca_cert_local_path: "./files/MyRootCA.cer"
